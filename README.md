@@ -11,7 +11,7 @@ https://github.com/rstats-gsoc/gsoc2018/wiki/MoMA%3A-Modern-Multivariate-Analysi
 -Package their implementation and pass R CMD check on at least two of the three major platforms: Windows, MacOS, and Linux (Debian/Ubuntu). __TODO__
 
 # 1 Introduction
-The follow code implement the Rank-one SFPCA in _Sparse and FUnctional Principal Compoments Analysis, Gevenvera et al., 2013_. The challenge of proposing SFPCA lies in that 1) the model needs to take into account sparsity and smoothness of the principal components (PC), and 2) the optimiazation porblem should enjoy appropriate numerical property. In SFPCA algorithm, the original problem is divided into iterating solving penalized regression problem, which can be solved using proximal gradient methods or accelerated proximal gradient method.
+The follow code implement the Rank-one SFPCA in _Sparse and FUnctional Principal Compoments Analysis, Genevera I. Allen, 2013_. The challenge of proposing SFPCA lies in that 1) the model needs to take into account sparsity and smoothness of the principal components (PC), and 2) the optimiazation porblem should enjoy appropriate numerical property. In SFPCA algorithm, the original problem is divided into iterating solving penalized regression problem, which can be solved using proximal gradient methods or accelerated proximal gradient method.
 
 # 2 Testing 
 
