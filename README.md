@@ -92,6 +92,7 @@ for(sm in sm_set){
 }
 mtext("Sparsity ->", side = 3, line = -32, outer = TRUE)
 ```
+![](pics/effect.JPG)
 From top to bottom, we can see the connecting part become more smooth and round, because smooth penalty is becoming more significant. From left to right, remaining signal from $v2$ weakens, meanwhile the major part of $v1$ is also distorted.
 
 ## 2.3 Signal recovering
@@ -132,3 +133,13 @@ res <- svd(X)
 plot(res$v[,1],type="l")
 lines(res$v[,2],type="l",col="red",title="SVD")
 ```
+![](pics/comp.JPG)
+We compare the result from simple SVD method. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth.
+
+
+# 3 TODO List
+### 3.0 Vecterization and optimization code.
+
+### 3.1 Further test the degenerated cases, i.e., when $\alpha_u,\alpha_v,\Omega_u,\Omega_v$ are zeros, the algorithm should be the SVD.
+
+### 3.2 C code commenting.
