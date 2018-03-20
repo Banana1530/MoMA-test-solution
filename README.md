@@ -3,8 +3,11 @@ Solution to test problem
 https://github.com/rstats-gsoc/gsoc2018/wiki/MoMA%3A-Modern-Multivariate-Analysis-in-R
 
 -Implement the SFPCA algorithm for a rank-one approximation in C++ for the special case of L1 ("lasso") penalization on both the left and right singular vectors and user defined smoothing matrices; (see [40] for details of the algorithm) __FINISHED!__
+
 -Wrap their implementation using Rcpp; __FINISHED__
+
 -Test their implementation using testthat; __TODO__
+
 -Package their implementation and pass R CMD check on at least two of the three major platforms: Windows, MacOS, and Linux (Debian/Ubuntu). __TODO__
 
 # 1 Introduction
