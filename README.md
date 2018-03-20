@@ -134,7 +134,8 @@ plot(res$v[,1],type="l")
 lines(res$v[,2],type="l",col="red",title="SVD")
 ```
 ![](pics/comp.JPG)
-We compare the result from simple SVD method. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth.
+
+We compare the result from simple SVD method. Frome left to top: Original signal, SFPCA, SVD. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth.
 
 
 # 3 TODO List
