@@ -101,11 +101,13 @@ The part try to re-implement Section 5.1 in the paper _Sparse and FUnctional Pri
 # Run the model
 # Input:
 # ---- X: data matrix
-# ---- O_u, O_v: Squared second difference matrix, lambda_u and lambda_v control the penalty level
+# ---- O_u, O_v: Squared second difference matrix
+# ---- lambda_u and lambda_v control the penalty level
 # ---- "l1", "l1": proximal operator has closed form solution of L1.
 # Output:
 # ---- u,v: the PCs
-# ---- uTXv
+# ---- d: u^T X v
+# ---- Xhat: deflated X
 res1 <- sfpca(X,
               O_u,O_v,
               0.1,0.1,
