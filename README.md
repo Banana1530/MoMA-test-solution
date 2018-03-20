@@ -138,8 +138,7 @@ We compare the result from simple SVD method. SFPCA is significantly better than
 
 
 # 3 TODO List
-### 3.0 Vecterization and optimization code.
-
+### 3.0 Make it a package and platform testing.
 ### 3.1 Further test the degenerated cases, i.e., when $\alpha_u,\alpha_v,\Omega_u,\Omega_v$ are zeros, the algorithm should be the SVD.
+### 3.2 C code commenting.Vecterization and optimization code.
 
-### 3.2 C code commenting.
