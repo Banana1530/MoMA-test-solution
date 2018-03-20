@@ -8,24 +8,26 @@ The follow code implement the Rank-one SFPCA in _Sparse and FUnctional Principal
 
 ## 2.1 Dataset discription
 
-```{r, message=FALSE, warning=FALSE}
+```r
 library('Rcpp')
 library('RcppArmadillo')
 setwd('C:/Users/Smart/Desktop')
 sourceCpp('sfpca.cpp')
 ```
-```{r}
+```r
 # Some util functions
 norm_vec <- function(x) sqrt(sum(x^2))
-n <- 200
+
 SSD <- function(n){
-  # Generate squared second difference matrix, which looks like
+  # --------------------
+  #  Generate squared second difference matrix, which looks like
   #   6   -4  1   0   0   0
   #   -4  6  -4   1   0   0
   #   1   -4  6   -4  1   0
   #   0   1   -4  6   -4  1
   #   ..
   #   I derived the formula and should be further verified
+  #--------------------
   a <- 6*diag(n)
   for(i in 1:n){
     for(j in 1:n){
@@ -44,8 +46,9 @@ uni <- function(n){
 ```
 
 
-```{r}
+```r
 # Create data, the same setting as section 5.1 Simulation Study in the paper
+n <- 200
 ind <- as.vector(seq(n))
 u_1 <- uni(n)
 u_2 <- uni(n)
@@ -72,7 +75,7 @@ print(norm(X) /norm(eps))
 ```
 
 ## 2.2 The effect of penalty parameters
-```{r}
+```r
 sm_set = c(0.1,1,10)
 sp_set = c(1,3,5,7)
 par(mfrow=c(length(sm_set),length(sp_set)))
@@ -94,7 +97,7 @@ From top to bottom, we can see the connecting part become more smooth and round,
 ## 2.3 Signal recovering
 The part try to re-implement Section 5.1 in the paper _Sparse and FUnctional Principal Compoments Analysis, Gevenvera et al., 2013_. The major idea is that, $X = d_1u_1v_1^T + d_2u_2v_2^T + \epsilon$, where $v_1$ and $v_2$ are sinuoidal data, and we try to recover them from the noised matrix.
 
-```{r, message=FALSE, warning=FALSE, include=TRUE}
+```r
 # Run the model
 # Input:
 # ---- X: data matrix
@@ -126,5 +129,4 @@ lines(-res2$v,type='l',col="red",title="SFPCA")
 res <- svd(X)
 plot(res$v[,1],type="l")
 lines(res$v[,2],type="l",col="red",title="SVD")
-
 ```
