@@ -2,7 +2,7 @@ language: R
 sudo: false
 cache: packages
 os: 
-  -osx
+  -windows
 
 after_success:
   - Rscript -e 'covr::codecov()'
