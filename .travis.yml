@@ -3,7 +3,7 @@ sudo: false
 cache: packages
 os: 
   -osx
-  -linux
+
 after_success:
   - Rscript -e 'covr::codecov()'
 env:
