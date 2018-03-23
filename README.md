@@ -51,8 +51,7 @@ plot(v_1,type = 'l',ylim=c(-0.3,0.3));
 lines(v_2,col='blue');
 lines(v_3,col='red')
 ```
-
-![](pics\signal.png)
+![](pics/signal.png)
 
 ## 2.2 The effect of penalty parameters
 
