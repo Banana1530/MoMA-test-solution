@@ -77,7 +77,7 @@ mtext("Sparsity ->", side = 3, line = -32, outer = TRUE)
 ```
 ![](pics/effect.JPG)
 
-From top to bottom, we can see the connecting part become more smooth and round, because smooth penalty is becoming more significant. From left to right, remaining signal from v2​ weakens, meanwhile the major part of v1​ is also distorted.
+From top to bottom, we can see the connecting part of signal _v1_ and _v2_ becomes more smooth and round, because smooth penalty is becoming more significant. From left to right, remaining signal from _v2_ weakens, meanwhile the major part of _v1_ is also distorted.
 
 ## 2.3 Signal recovering
 The part try to re-implement Section 5.1 in the paper. The major idea is that, $X = d_1u_1v_1^T + d_2u_2v_2^T + \epsilon$, where $v_1$ and $v_2$ are sinusoidal data, and we try to recover them from the noised matrix. Here I only try to recover fist signal from a combination of 1 and 2.
