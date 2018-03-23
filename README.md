@@ -22,7 +22,7 @@ In SFPCA algorithm, the original problem is divided into iterating solving penal
 
 
 
-# 2 Testing
+# 2 Demo of SFPCA
 
 ## 2.1 Dataset description
 
@@ -52,7 +52,7 @@ lines(v_2,col='blue');
 lines(v_3,col='red')
 ```
 
-![](pics\signal.PNG)
+![](pics\signal.png)
 
 ## 2.2 The effect of penalty parameters
 
