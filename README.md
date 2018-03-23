@@ -1,6 +1,5 @@
-# MoMA
-Solution to test problem
-https://github.com/rstats-gsoc/gsoc2018/wiki/MoMA%3A-Modern-Multivariate-Analysis-in-R
+# MoMA test solution
+Original problem can be founcd [here](https://github.com/rstats-gsoc/gsoc2018/wiki/MoMA%3A-Modern-Multivariate-Analysis-in-R).
 
 -Implement the SFPCA algorithm for a rank-one approximation in C++ for the special case of L1 ("lasso") penalization on both the left and right singular vectors and user defined smoothing matrices; (see [40] for details of the algorithm) __FINISHED!__
 
@@ -23,6 +22,7 @@ In SFPCA algorithm, the original problem is divided into iterating solving penal
 
 
 # 2 Demo of SFPCA
+Details of the two demostrations can be found in `SFPCA demo.R`.
 
 ## 2.1 Dataset description
 
