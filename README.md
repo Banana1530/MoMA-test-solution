@@ -6,9 +6,9 @@ https://github.com/rstats-gsoc/gsoc2018/wiki/MoMA%3A-Modern-Multivariate-Analysi
 
 -Wrap their implementation using Rcpp; __FINISHED__
 
--Test their implementation using `testthat`; __TODO__
+-Test their implementation using `testthat`; **FINISHED**
 
--Package their implementation and pass `R CMD check` on at least two of the three major platforms: Windows, MacOS, and Linux (Debian/Ubuntu). __TODO__
+-Package their implementation and pass `R CMD check` on at least two of the three major platforms: Windows, MacOS, and Linux (Debian/Ubuntu). **FINISHED**
 
 # 1 Introduction
 
@@ -22,83 +22,41 @@ In SFPCA algorithm, the original problem is divided into iterating solving penal
 
 
 
-## C++ implementation framework
-
-
-
 # 2 Testing
 
 ## 2.1 Dataset description
 
-```r
-library('Rcpp')
-library('RcppArmadillo')
-setwd('C:/Users/Smart/Desktop')
-sourceCpp('sfpca.cpp')
-```
-```r
-# Some util functions
-norm_vec <- function(x) sqrt(sum(x^2))
+I follow the same setting in the Section 5.1 in the paper. The entire signal is composed of three sparse and smooth signals:
 
-SSD <- function(n){
-  # --------------------
-  #  Generate squared second difference matrix, which looks like
-  #   6   -4  1   0   0   0
-  #   -4  6  -4   1   0   0
-  #   1   -4  6   -4  1   0
-  #   0   1   -4  6   -4  1
-  #   ..
-  #   I derived the formula and should be further verified
-  #--------------------
-  a <- 6*diag(n)
-  for(i in 1:n){
-    for(j in 1:n){
-      if(abs(i-j) == 1) a[i,j] = -4;
-      if(abs(i-j) == 2) a[i,j] = 1;
-    }
-  }
-  return(a);
-}
+1 A sinusoidal signal at the beginning;
 
-uni <- function(n){
-  # Noramlize a vector
-  u_1 <- as.vector(rnorm(n)) 
-  return(u_1/norm_vec(u_1))
-}
-```
+2 A Gaussian-modulated sinusoidal signal in the middle;
+
+3 A sinusoidal signal at the end.
 
 
 ```r
-# Create data, the same setting as section 5.1 Simulation Study in the paper
-n <- 200
-ind <- as.vector(seq(n))
-u_1 <- uni(n)
-u_2 <- uni(n)
-u_3 <- uni(n)
-eps <- matrix(rnorm(n*n),n,n)
-eps <- eps/20
-O_u <- SSD(n)
-O_v <- O_u 
 # Sinusoidal
 v_1 <- sin((ind+15)*pi/17);v_1[floor(7/20*n):n]=0;v_1 <- v_1/norm_vec(v_1);
 
 # Gaussian-modulated sinusoidal
 v_2 <- as.vector(exp(-(ind-100)^2/650)*sin((ind-100)*2*pi/21)); 
-v_2[0:floor(7/20*n)]=0;
-v_2[floor(130/200*n):n] = 0;
+v_2[0:floor(7/20*n)]=0; v_2[floor(130/200*n):n] = 0;
 v_2 <- v_2/norm_vec(v_2);
 
-# Sinusoidal, not used in current testing
-#v_3 <- sin((ind-40)*pi/30);v_3[0:floor(130/200*n)]=0;v_3 <- v_3/norm_vec(v_3);
-#lines(v_3,col='red')
+# Sinusoidal
+v_3 <- sin((ind-40)*pi/30);v_3[0:floor(130/200*n)]=0;v_3 <- v_3/norm_vec(v_3);
 
-X <-  n/4*u_1 %*% t(v_1) + n/5*u_2 %*% t(v_2) +eps
-print(norm(X) /norm(eps))
+plot(v_1,type = 'l',ylim=c(-0.3,0.3));
+lines(v_2,col='blue');
+lines(v_3,col='red')
 ```
 
-
+![](pics\signal.PNG)
 
 ## 2.2 The effect of penalty parameters
+
+I use a simple nested loop to see how the algorithm behaves in recovering signal. Smooth and sparse penalty on both u and v are set equal. Smooth penalty level ranges in 0.1, 1, 10, 50 and sparse penalty lever in1,3,5,7.
 
 ```r
 sm_set = c(0.1,1,10)
@@ -115,13 +73,14 @@ for(sm in sm_set){
     plot(res$v,type='l',xlab='',ylab='')  
   }
 }
-mtext("Sparsity ->", side = 3, line = -32, outer = TRUE)
+mtext("Sparsity ->", side = 3, line = -32, outer = TRUE)	
 ```
 ![](pics/effect.JPG)
-From top to bottom, we can see the connecting part become more smooth and round, because smooth penalty is becoming more significant. From left to right, remaining signal from $v2$ weakens, meanwhile the major part of $v1$ is also distorted.
+
+From top to bottom, we can see the connecting part become more smooth and round, because smooth penalty is becoming more significant. From left to right, remaining signal from v2​ weakens, meanwhile the major part of v1​ is also distorted.
 
 ## 2.3 Signal recovering
-The part try to re-implement Section 5.1 in the paper. The major idea is that, $X = d_1u_1v_1^T + d_2u_2v_2^T + \epsilon$, where $v_1$ and $v_2$ are sinusoidal data, and we try to recover them from the noised matrix.
+The part try to re-implement Section 5.1 in the paper. The major idea is that, $X = d_1u_1v_1^T + d_2u_2v_2^T + \epsilon$, where $v_1$ and $v_2$ are sinusoidal data, and we try to recover them from the noised matrix. Here I only try to recover fist signal from a combination of 1 and 2.
 
 ```r
 # Run the model
@@ -160,11 +119,15 @@ lines(res$v[,2],type="l",col="red",title="SVD")
 ```
 ![](pics/comp.JPG)
 
-We compare the result from simple SVD method. Frome left to top: Original signal, SFPCA, SVD. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth.
+We compare the result with simple SVD method. From left to top: Original signal, SFPCA, SVD. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth. Naïve SVD has obvious two drawback: we can see remaining signal in other components, and the tails of the two recovered components are noisy, indicating SVD is relatively sensitive to noise in the data matrix.
+
+# 3 Testing
+
+As required in test problem 3 and 4, my code should pass `R CMD check` and have `testthat`.
+
+I experiment with platform compatibility on Travis CI and verified that on Ubuntu and MacOS my package can be successfully installed. Result is in [here](https://travis-ci.org/Banana1530/MoMA/jobs/356853383).
+
+`testthat` When no penalty is enforced, the algorithms is simply finding an SVD of a matrix. So the result should be identical to the built-in SVD function. More tests can be done. For example, dimensions of the input should be compatible, the square difference matrix should be semi-positive definite, input matrix should not have missing values and so on, when penalty levels are not zero and user does not provide penalty type users should receive warning. These will be left for future work.
 
 
-# 3 TODO List
-### 3.0 Make it a package and pass platform testing.
-### 3.1 Further test the degenerated cases, i.e., when $\alpha_u,\alpha_v,\Omega_u,\Omega_v$ are zeros.
-### 3.2 C code commenting.Vecterization and optimization.
 
