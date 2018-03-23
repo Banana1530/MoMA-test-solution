@@ -118,7 +118,7 @@ lines(res$v[,2],type="l",col="red",title="SVD")
 ```
 ![](pics/comp.JPG)
 
-We compare the result with simple SVD method. From left to top: Original signal, SFPCA, SVD. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth. Naïve SVD has obvious two drawback: we can see remaining signal in other components, and the tails of the two recovered components are noisy, indicating SVD is relatively sensitive to noise in the data matrix.
+We compare the result with simple SVD method. From left to right: Original signal, SFPCA, SVD. SFPCA is significantly better than SVD in selecting principal components when the original constituent signals are inherently sparse and smooth. Naïve SVD has obvious two drawback: we can see remaining signal in other components, and the tails of the two recovered components are noisy, indicating SVD is relatively sensitive to noise in the data matrix.
 
 # 3 Testing
 
