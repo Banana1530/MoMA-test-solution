@@ -55,6 +55,8 @@ lines(v_3,col='red')
 
 ## 2.2 The effect of penalty parameters
 
+As the first demonstration, I recover the first signal (the black one in the above picture) from the mixed signal.
+
 I use a simple nested loop to see how the algorithm behaves in recovering signal. Smooth and sparse penalty on both u and v are set equal. Smooth penalty level ranges in 0.1, 1, 10, 50 and sparse penalty lever in1,3,5,7.
 
 ```r
